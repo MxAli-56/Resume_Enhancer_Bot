@@ -1,0 +1,189 @@
+/* ---------- Variables (easy to tweak) ---------- */
+:root{
+  --bg: #f6f8fb;
+  --card: #ffffff;
+  --muted: #6b7280;
+  --accent: #2563eb;
+  --bot-bg: #eef2ff;
+  --user-bg: #dcfce7;
+  --text: #0f172a;
+  --radius: 12px;
+  --shadow-sm: 0 6px 18px rgba(15,23,42,0.06);
+}
+
+/* Dark mode override (toggle by adding .dark to <body>) */
+body.dark {
+  --bg: #071022;
+  --card: #0b1220;
+  --muted: #94a3b8;
+  --accent: #3b82f6;
+  --bot-bg: #08263a;
+  --user-bg: #103926;
+  --text: #e6eef7;
+  --shadow-sm: none;
+}
+
+/* ---------- Base page layout ---------- */
+* { box-sizing: border-box; }
+html,body { height:100%; }
+body{
+  margin:0;
+  font-family: Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+  background:var(--bg);
+  color:var(--text);
+  -webkit-font-smoothing:antialiased;
+  -moz-osx-font-smoothing:grayscale;
+  line-height:1.45;
+  display: flex;
+  flex-direction: column; /* vertical stack */
+  align-items: center;    /* center content horizontally */
+  padding: 0;             /* remove page-wide padding */
+}
+
+/* Constrain width so it looks good on desktop and mobile */
+#resumeBot, .query {
+  width: 90%;      /* takes 90% width → 5% padding each side */
+  margin: 0 auto;  /* centers it nicely */
+}
+
+/* ---------- Header / Navbar ---------- */
+header {
+  width: 100%;
+  margin-bottom: 12px;
+}
+nav {
+  width: 100%;
+  background: #333;
+  color: #fff;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 20px;
+}
+
+.logo {
+  margin: 0; /* reset, no auto-centering */
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+
+/* ---------- Chat container ---------- */
+#resumeBot {
+  flex: 1;
+  background: var(--card);
+  border: 1px solid #444;   /* darker border for contrast */
+  border-radius: 10px;
+  padding: 15px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+  display: flex;
+  flex-direction: column;
+}
+
+/* ---------- Message bubbles ---------- */
+.msg {
+  display: flex;          /* use flex column layout */
+  flex-direction: column; /* stack children vertically */
+  padding: 10px 14px;
+  border-radius: 14px;
+  max-width: 75%;
+  word-wrap: break-word;
+  box-shadow: 0 1px 0 rgba(0,0,0,0.02);
+  font-size: 15px;
+  margin-bottom: 10px;    /* space between messages */
+}
+
+/* Bot messages - left aligned */
+.msg.bot {
+  background: var(--bot-bg);
+  align-self:flex-start;
+  color:var(--text);
+  border-top-left-radius:6px;
+}
+
+/* User messages - right aligned */
+.msg.user {
+  background: var(--user-bg);
+  align-self:flex-end;
+  color:var(--text);
+  text-align:left;
+  border-top-right-radius:6px;
+}
+
+/* Small meta text (timestamp, etc.) */
+.msg .meta {
+  display:block;
+  margin-top:6px;
+  font-size:12px;
+  color:var(--muted);
+}
+
+/* ---------- Typing indicator ---------- */
+.typing {
+  display:inline-block;
+  font-size:13px;
+  color:var(--muted);
+  background: rgba(0,0,0,0.03);
+  padding:6px 10px;
+  border-radius:999px;
+  position: absolute; /* positioned relative to .query (we set .query position:relative) */
+  left: 20px;
+  top: -18px;
+  box-shadow:none;
+}
+.hidden { display:none !important; }
+
+.query {
+  display: flex;
+  gap: 8px;
+  margin-top: 10px;
+}
+
+.query textarea {
+  flex: 1;
+  padding: 10px;
+  border: 1px solid #333;
+  border-radius: 8px;
+  font-size: 1rem;
+  resize: none;
+}
+
+.query button {
+  padding: 10px 15px;
+  border: none;
+  border-radius: 8px;
+  background: #444;
+  color: white;
+  font-size: 1rem;
+  cursor: pointer;
+}
+
+.query button:disabled {
+  background: #aaa;
+  cursor: not-allowed;
+}
+
+/* Copy/download small buttons (future) */
+.action-btn {
+  border:none;
+  background:transparent;
+  color:var(--accent);
+  cursor:pointer;
+  font-weight:600;
+}
+
+/* ---------- Small screens responsiveness ---------- */
+@media (max-width:640px){
+  body { padding:12px; }
+  #resumeBot { height: calc(66vh); padding:14px; }
+  .logo { font-size:18px; }
+  #sendBtn { width:86px; min-height:44px; font-size:14px; }
+  .msg { font-size:14px; }
+}
+
+/* ---------- Utility helpers ---------- */
+.sr-only { /* screen-reader only text */
+  position:absolute!important;
+  height:1px; width:1px;
+  overflow:hidden; clip:rect(1px,1px,1px,1px);
+  white-space:nowrap;
+}
