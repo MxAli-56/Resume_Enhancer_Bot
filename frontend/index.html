@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Resume Enhancer Bot</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Navbar -->
+    <header>
+        <nav>
+            <h2 class="logo">Resume Enhancer Bot</h2>
+            <button id="themeToggleBtn">Dark Mode</button>
+        </nav>
+    </header>
+
+    <div id="resumeBot" class="resumeBot">
+        <div class="msg bot">I am your Resume Enhancer Bot, Ask me anything!</div>
+    </div>
+
+    <div id="typingIndicator" class="typing hidden">Enhancing...</div>
+    
+    <div class="query">
+        <textarea placeholder="Enter Your Query Here" id="userInput" name="user_input" autocomplete="off"></textarea>
+        <button type="button" id="sendBtn">Send</button>
+    </div>
+    
+    <script src="main.js"></script>
+</body>
+</html>
