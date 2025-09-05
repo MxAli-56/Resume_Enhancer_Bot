@@ -1,4 +1,4 @@
-/* ---------- Variables (easy to tweak) ---------- */
+/* ---------- Variables (keep colors as current resume bot) ---------- */
 :root{
   --bg: #f6f8fb;
   --card: #ffffff;
@@ -7,50 +7,38 @@
   --bot-bg: #eef2ff;
   --user-bg: #dcfce7;
   --text: #0f172a;
-  --radius: 12px;
-  --shadow-sm: 0 6px 18px rgba(15,23,42,0.06);
+  --radius: 18px;  /* bigger, like old chatbot */
+  --shadow-sm: 0 2px 6px rgba(0,0,0,0.08);
 }
 
-/* Dark mode override (toggle by adding .dark to <body>) */
+/* Dark mode */
 body.dark {
   --bg: #071022;
   --card: #0b1220;
   --muted: #94a3b8;
   --accent: #3b82f6;
-  --bot-bg: #08263a;
-  --user-bg: #103926;
+  --bot-bg: #2c2c2e;
+  --user-bg: #2979ff;
   --text: #e6eef7;
   --shadow-sm: none;
 }
 
-/* ---------- Base page layout ---------- */
+/* ---------- Base layout ---------- */
 * { box-sizing: border-box; }
 html,body { height:100%; }
 body{
   margin:0;
-  font-family: Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+  font-family: system-ui, Arial, sans-serif;
   background:var(--bg);
   color:var(--text);
-  -webkit-font-smoothing:antialiased;
-  -moz-osx-font-smoothing:grayscale;
-  line-height:1.45;
+  line-height:1.5;
   display: flex;
-  flex-direction: column; /* vertical stack */
-  align-items: center;    /* center content horizontally */
-  padding: 0;             /* remove page-wide padding */
+  flex-direction: column;
+  align-items: center;
 }
 
-/* Constrain width so it looks good on desktop and mobile */
-#resumeBot, .query {
-  width: 90%;      /* takes 90% width → 5% padding each side */
-  margin: 0 auto;  /* centers it nicely */
-}
-
-/* ---------- Header / Navbar ---------- */
-header {
-  width: 100%;
-  margin-bottom: 12px;
-}
+/* Navbar */
+header { width: 100%; margin-bottom: 8px; }
 nav {
   width: 100%;
   background: #333;
@@ -60,96 +48,100 @@ nav {
   align-items: center;
   padding: 10px 20px;
 }
-
 .logo {
-  margin: 0; /* reset, no auto-centering */
-  font-size: 1.5rem;
+  font-size: 1.2rem;
   font-weight: bold;
+  margin: 0;
 }
 
 /* ---------- Chat container ---------- */
 #resumeBot {
   flex: 1;
+  width: 90%;
   background: var(--card);
-  border: 1px solid #444;   /* darker border for contrast */
-  border-radius: 10px;
-  padding: 15px;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+  border: 1px solid #444;
+  border-radius: 12px;
+  padding: 14px;
+  box-shadow: var(--shadow-sm);
   display: flex;
   flex-direction: column;
-  height: 66vh;            /* fixed height (desktop & large screens) */
-  max-height: 80vh;        /* prevent overflow */
-  overflow-y: auto;        /* scroll when full */
+  height: 66vh;
+  max-height: 80vh;
+  overflow-y: auto;
+  gap: 8px; /* like old chatbot spacing */
 }
 
-/* ---------- Message bubbles ---------- */
+/* ---------- Messages ---------- */
 .msg {
-  display: flex;          /* use flex column layout */
-  flex-direction: column; /* stack children vertically */
+  max-width: 70%;
   padding: 10px 14px;
-  border-radius: 14px;
-  max-width: 75%;
+  border-radius: var(--radius);
   word-wrap: break-word;
-  box-shadow: 0 1px 0 rgba(0,0,0,0.02);
-  font-size: 15px;
-  margin-bottom: 10px;    /* space between messages */
+  white-space: pre-wrap;
+  font-size: 0.95rem;
+  line-height: 1.5;
 }
 
-/* Bot messages - left aligned */
-.msg.bot {
-  background: var(--bot-bg);
-  align-self:flex-start;
-  color:var(--text);
-  border-top-left-radius:6px;
-}
-
-/* User messages - right aligned */
+/* User bubble (right side) */
 .msg.user {
   background: var(--user-bg);
-  align-self:flex-end;
-  color:var(--text);
-  text-align:left;
-  border-top-right-radius:6px;
+  color: #fff;
+  align-self: flex-end;
+  border-bottom-right-radius: 6px;
 }
 
-/* Small meta text (timestamp, etc.) */
-.msg .meta {
-  display:block;
-  margin-top:6px;
-  font-size:12px;
-  color:var(--muted);
+/* Bot bubble (left side) */
+.msg.bot {
+  background: var(--bot-bg);
+  color: var(--text);
+  align-self: flex-start;
+  border-bottom-left-radius: 6px;
+}
+
+/* Username (like old chatbot) */
+.username {
+  font-size: 12px;
+  font-weight: 600;
+  margin-bottom: 4px;
+  opacity: 0.9;
+}
+.msg.user .username { color: #22c55e; }
+.msg.bot .username { color: #60a5fa; }
+
+/* System messages (centered info) */
+.msg.system {
+  background: #ffefc1;
+  color: #333;
+  align-self: center;
+  font-size: 0.85rem;
+  border-radius: 10px;
+  padding: 6px 10px;
 }
 
 /* ---------- Typing indicator ---------- */
 .typing {
-  display:inline-block;
-  font-size:13px;
-  color:var(--muted);
-  background: rgba(0,0,0,0.03);
-  padding:6px 10px;
-  border-radius:999px;
-  position: absolute; /* positioned relative to .query (we set .query position:relative) */
-  left: 20px;
-  top: -18px;
-  box-shadow:none;
+  font-size: 13px;
+  color: var(--muted);
+  margin-top: 4px;
+  margin-left: 10px;
 }
 .hidden { display:none !important; }
 
+/* ---------- Input box area ---------- */
 .query {
+  width: 90%;
   display: flex;
   gap: 8px;
-  margin-top: 10px;
+  margin: 12px auto;
 }
-
 .query textarea {
   flex: 1;
   padding: 10px;
-  border: 1px solid #333;
+  border: 1px solid #ccc;
   border-radius: 8px;
   font-size: 1rem;
   resize: none;
 }
-
 .query button {
   padding: 10px 15px;
   border: none;
@@ -159,34 +151,15 @@ nav {
   font-size: 1rem;
   cursor: pointer;
 }
-
 .query button:disabled {
   background: #aaa;
   cursor: not-allowed;
 }
 
-/* Copy/download small buttons (future) */
-.action-btn {
-  border:none;
-  background:transparent;
-  color:var(--accent);
-  cursor:pointer;
-  font-weight:600;
-}
-
-/* ---------- Small screens responsiveness ---------- */
+/* ---------- Responsive ---------- */
 @media (max-width:640px){
-  body { padding:12px; }
-  #resumeBot { height: calc(66vh); padding:14px; }
-  .logo { font-size:18px; }
-  #sendBtn { width:86px; min-height:44px; font-size:14px; }
-  .msg { font-size:14px; }
-}
-
-/* ---------- Utility helpers ---------- */
-.sr-only { /* screen-reader only text */
-  position:absolute!important;
-  height:1px; width:1px;
-  overflow:hidden; clip:rect(1px,1px,1px,1px);
-  white-space:nowrap;
+  #resumeBot { height: 65vh; padding: 10px; }
+  .msg { max-width: 85%; font-size: 0.9rem; }
+  .query textarea { font-size: 0.9rem; padding: 8px; }
+  .query button { font-size: 0.9rem; padding: 8px 12px; }
 }
