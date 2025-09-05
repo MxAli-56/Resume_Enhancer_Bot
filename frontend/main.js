@@ -29,7 +29,7 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   function setBusy(isBusy) {
-    btn.disabled = isBusy; // ✅ cleaner
+    btn.disabled = false; // ✅ cleaner
     btn.textContent = isBusy ? "🛑" : "Send";
   }
 
@@ -42,11 +42,11 @@ document.addEventListener("DOMContentLoaded", () => {
   input.value = "";
   setBusy(true);
 
-  abortController = new AbortController();
-
   // Create empty bot bubble
   const botWrap = appendMessage("bot", "", "ResumeBot");
   const botBody = botWrap.querySelector(".msg-body");
+
+  abortController = new AbortController();
 
   try {
     const resp = await fetch("http://localhost:5000/enhance", {
@@ -60,6 +60,8 @@ document.addEventListener("DOMContentLoaded", () => {
     const decoder = new TextDecoder();
 
     while (true) {
+      if (!abortController) break; // 👈 check if stopped
+
       const { done, value } = await reader.read();
       if (done) break;
 
@@ -71,7 +73,7 @@ document.addEventListener("DOMContentLoaded", () => {
           const obj = JSON.parse(line);
 
           if (obj.token) {
-            botBody.textContent += obj.token; // stream into bubble
+            botBody.textContent += obj.token;
           }
 
           if (obj.done) {
@@ -80,13 +82,15 @@ document.addEventListener("DOMContentLoaded", () => {
             return;
           }
         } catch (e) {
-          console.log("⚠️ Frontend skipped line:", line);
+          console.log("⚠️ skipped:", line);
         }
       }
     }
+
   } catch (err) {
     botBody.textContent = "❌ Error: " + err.message;
     setBusy(false);
+    abortController = null;
   }
 }
 
