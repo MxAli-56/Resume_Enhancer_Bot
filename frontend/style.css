@@ -1,27 +1,30 @@
-/* ---------- Variables (keep colors as current resume bot) ---------- */
-:root{
-  --bg: #f6f8fb;
+/* ---------- Variables (easy to tweak) ---------- */
+:root {
+  --bg: #f8f9fa;
   --card: #ffffff;
   --muted: #6b7280;
   --accent: #2563eb;
   --bot-bg: #eef2ff;
-  --user-bg: #dcfce7;
-  --text: #0f172a;
-  --radius: 18px;  /* bigger, like old chatbot */
-  --shadow-sm: 0 2px 6px rgba(0,0,0,0.08);
+  --user-bg: #e9fce9;
+  --text: #1a1f2c;
+  --radius: 12px;
+  --shadow-sm: 0 6px 18px rgba(0,0,0,0.05);
+  --textarea: #333
 }
 
-/* Dark mode */
+/* Dark mode override (toggle by adding .dark to <body>) */
 body.dark {
-  --bg: #071022;
-  --card: #0b1220;
+  --bg: #0e1525;
+  --card: #141b2d;
   --muted: #94a3b8;
   --accent: #3b82f6;
-  --bot-bg: #2c2c2e;
-  --user-bg: #2979ff;
-  --text: #e6eef7;
+  --bot-bg: #1e293b;
+  --user-bg: #1b4332;
+  --text: #e2e8f0;
   --shadow-sm: none;
+  --textarea: #f8f9fa
 }
+
 
 /* ---------- Base layout ---------- */
 * { box-sizing: border-box; }
@@ -141,6 +144,7 @@ nav {
   border-radius: 8px;
   font-size: 1rem;
   resize: none;
+  background: var(--textarea);
 }
 .query button {
   padding: 10px 15px;
