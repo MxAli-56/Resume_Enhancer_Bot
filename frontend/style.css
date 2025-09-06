@@ -88,7 +88,7 @@ nav {
 /* User bubble (right side) */
 .msg.user {
   background: var(--user-bg);
-  color: #fff;
+  color: var(--text);
   align-self: flex-end;
   border-bottom-right-radius: 6px;
 }
