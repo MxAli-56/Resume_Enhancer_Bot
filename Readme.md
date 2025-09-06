@@ -72,7 +72,7 @@ It also handles greetings and small talk politely, without mixing them into resu
 
 🎯 Demo
 
-Coming soon – demo GIF/video showing ResumeBot transforming resume text.
+[Watch the demo here](https://drive.google.com/file/d/1PunMqUbJNl4tI3Z2ihctg8DgEgWBzVWw/view?usp=sharing)
 
 📌 Example
 
